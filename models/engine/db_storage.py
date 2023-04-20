@@ -5,15 +5,15 @@
 
 from os import getenv
 from sqlalchemy.orm import sessionmaker, scoped_session
-from sqlalchemy import (create_engine)
+from sqlalchemy import create_engine
 from models.base_model import Base
-""" Import all models that dependen on Base"""
-from models.city import City
 from models.place import Place
+from models.user import User
+from models.state import State
+from models.city import City
 from models.amenity import Amenity
 from models.review import Review
-from models.state import State
-from models.user import User
+
 
 class DBStorage:
     """Database storage engine"""
@@ -42,13 +42,14 @@ class DBStorage:
             cls = eval(cls)
             objects = self.__session.query(cls)
             for obj in objects:
-                k = "{}.{}".format(type(obj).__name__, obj.id)
+                k = "{}.{}".format(obj.__class__.__name__, obj.id)
                 d[k] = obj
             return d
-        for obj in [User, State, City, Place]:
+
+        for obj in [User, State, City, Amenity, Place, Review]:
             objects = self.__session.query(obj).all()
             for obj in objects:
-                k = "{}.{}".format(type(obj).__name__, obj.id)
+                k = "{}.{}".format(obj.__class__.__name__, obj.id)
                 d[k] = obj
         return d
 
@@ -71,5 +72,4 @@ class DBStorage:
         """Create tables in database and creates current database session"""
         Base.metadata.create_all(self.__engine)
         session = sessionmaker(bind=self.__engine, expire_on_commit=False)
-        session = scoped_session(session)
-        self.__session = session()
+        self.__session = scoped_session(session)()
