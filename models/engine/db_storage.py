@@ -20,7 +20,6 @@ class DBStorage:
     __engine = None
     __session = None
 
-
     def __init__(self):
         """DBStorage instantiation method"""
         user = getenv("HBNB_MYSQL_USER")
@@ -29,10 +28,9 @@ class DBStorage:
         host = getenv("HBNB_MYSQL_HOST")
         env = getenv("HBNB_ENV")
 
-        self.__engine = create_engine(
-                            'mysql+mysqldb://{}:{}@{}/{}'.format(
-                                 user, passwd, host, db),
-                             pool_pre_ping=True)
+        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.format(
+                                     user, passwd, host, db),
+                                     pool_pre_ping=True)
 
     def all(self, cls=None):
         """Query on current db session all objects"""
@@ -46,13 +44,12 @@ class DBStorage:
                 d[k] = obj
             return d
 
-        for obj in [User, State, City, Amenity, Place, Review]:
+        for obj in [User, State, City, Place, Amenity, Review]:
             objects = self.__session.query(obj).all()
             for obj in objects:
                 k = "{}.{}".format(obj.__class__.__name__, obj.id)
                 d[k] = obj
         return d
-
 
     def save(self):
         """Commit all changes of the current database"""

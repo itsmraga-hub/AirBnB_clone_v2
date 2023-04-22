@@ -16,7 +16,6 @@ class BaseModel:
     created_at = Column(DATETIME, default=datetime.utcnow(), nullable=False)
     updated_at = Column(DATETIME, default=datetime.utcnow(), nullable=False)
 
-
     def __init__(self, *args, **kwargs):
         """Instatntiates a new model"""
         if not kwargs:
@@ -30,9 +29,11 @@ class BaseModel:
             #                                         '%Y-%m-%dT%H:%M:%S.%f')
             for key, value in kwargs.items():
                 if key == 'created_at' or key == 'updated_at':
-                    value = datetime.strptime(kwargs['updated_at'], '%Y-%m-%dT%H:%M:%S.%f')
+                    value = datetime.strptime(kwargs['updated_at'],
+                                              '%Y-%m-%dT%H:%M:%S.%f')
                     setattr(self, key, value)
                 if key != '__class__':
+                    print("key {}, value {}".format(key, value))
                     setattr(self, key, value)
             if os.getenv("HBNB_TYPE_STORAGE") == "db":
                 if not hasattr(kwargs, 'id'):
@@ -41,7 +42,6 @@ class BaseModel:
                     setattr(self, 'created_at', datetime.now())
                 if not hasattr(kwargs, 'updated_at'):
                     setattr(self, 'updated_at', datetime.now())
-
 
     def __str__(self):
         """Returns a string representation of the instance"""
@@ -64,11 +64,10 @@ class BaseModel:
         dictionary['created_at'] = self.created_at.isoformat()
         dictionary['updated_at'] = self.updated_at.isoformat()
         if '_sa_instance_state' in dictionary.keys():
-            del(dictionary['_sa_instance_state'])
+            del (dictionary['_sa_instance_state'])
         return dictionary
 
     def delete(self):
         """Deletes current instance from db"""
         from models import storage
         storage.delete(self)
-
