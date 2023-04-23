@@ -47,7 +47,7 @@ class TestHBNBCommand(unittest.TestCase):
         """
         with patch('sys.stdout', new=StringIO()) as f:
             self.assertTrue(HBNBCommand().onecmd("quit"))
-    
+
     @unittest.skip("hello")
     def test_EOF(self):
         """
