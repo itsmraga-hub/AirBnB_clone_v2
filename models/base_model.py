@@ -33,7 +33,6 @@ class BaseModel:
                                               '%Y-%m-%dT%H:%M:%S.%f')
                     setattr(self, key, value)
                 if key != '__class__':
-                    print("key {}, value {}".format(key, value))
                     setattr(self, key, value)
             if os.getenv("HBNB_TYPE_STORAGE") == "db":
                 if not hasattr(kwargs, 'id'):

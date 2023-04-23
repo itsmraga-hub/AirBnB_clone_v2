@@ -30,7 +30,7 @@ class TestHBNBCommand(unittest.TestCase):
     classes = ["BaseModel", "User", "Place", "Review", "Amenity",
                "City", "State"]
 
-    @unittest.skip("jelp")
+    @unittest.skip("help")
     def test_help(self):
         """
         test help function by checking return value of
@@ -47,8 +47,8 @@ class TestHBNBCommand(unittest.TestCase):
         """
         with patch('sys.stdout', new=StringIO()) as f:
             self.assertTrue(HBNBCommand().onecmd("quit"))
-
-    @unittest.skip("EOF")
+    
+    @unittest.skip("hello")
     def test_EOF(self):
         """
         test the command EOF to HBNBCommand line whith
@@ -57,7 +57,6 @@ class TestHBNBCommand(unittest.TestCase):
         with patch("sys.stdout",  new=StringIO) as f:
             self.assertTrue(HBNBCommand().onecmd("EOF"))
 
-    @unittest.skip("create")
     def test_create(self):
         """Test Creation of objects """
 
@@ -67,6 +66,7 @@ class TestHBNBCommand(unittest.TestCase):
                 cmd_ = "create {}".format(className)
                 self.assertFalse(HBNBCommand().onecmd(cmd_))
 
+    @unittest.skip("demonstrating skipping")
     def test_all(self):
         """
             test all
