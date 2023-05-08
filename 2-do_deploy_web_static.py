@@ -40,3 +40,13 @@ def do_deploy(archive_path):
 
     except Exception:
         return False
+
+def do_pack():
+    try:
+        local("mkdir -p versions")
+        f = "versions/web_static_{}.tgz".format(
+            datetime.now().strftime("%Y%m%d%H%M%S"))
+        local("tar -zcvf {} web_static".format(f))
+        return f
+    except Exception:
+        return None
