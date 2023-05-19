@@ -12,7 +12,7 @@
 
 
 from flask import Flask
-from markupsafe import escape
+# from markupsafe import escape
 
 
 app = Flask(__name__)
@@ -24,7 +24,7 @@ def hello():
         Routes:
             /: display “Hello HBNB!”
     """
-    return f'Hello HBNB!'
+    return 'Hello HBNB!'
 
 
 @app.route('/hbnb', strict_slashes=False)
@@ -46,7 +46,7 @@ def c_text(text):
             /c/<text>
     """
     text = text.replace("_", " ")
-    return f'C {escape(text)}'
+    return 'C {}'.format(text)
 
 
 # Start the Flask application
