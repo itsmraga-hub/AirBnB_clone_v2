@@ -20,7 +20,7 @@ def hello_hbnb():
         Routes:
             /: display “Hello HBNB!”
     """
-    return f'Hello HBNB!'
+    return 'Hello HBNB!'
 
 
 # Start the Flask application
