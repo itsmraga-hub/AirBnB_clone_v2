@@ -19,7 +19,7 @@ app = Flask(__name__)
 def hello():
     """
         Routes:
-            /: display “Hello HBNB!” 
+            /: display “Hello HBNB!”
     """
     return 'Hello HBNB!'
 

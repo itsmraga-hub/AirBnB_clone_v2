@@ -76,7 +76,6 @@ def number(n):
             /python/(<text>)
             /number/<n>
     """
-    #if isinstance(n, int):
     return '{} is a number'.format(n)
 
 
