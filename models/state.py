@@ -6,8 +6,7 @@ import os
 from sqlalchemy import Column, ForeignKey, String
 from sqlalchemy.orm import relationship
 from models.base_model import BaseModel, Base
-from models import storage_type
-from models import storage
+#from models import storage
 from models.city import City
 
 
@@ -24,7 +23,7 @@ class State(BaseModel, Base):
         def cities(self):
             """getter for list of city instances related to the state"""
             city_list = []
-            all_cities = storage.all(City)
+            all_cities = models.storage.all(City)
             for city in all_cities.values():
                 if city.state_id == self.id:
                     city_list.append(city)

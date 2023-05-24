@@ -105,7 +105,10 @@ def number_odd_or_even(n):
             /number_template/<n>
             /number_odd_or_even/<n>
     """
-    return render_template('6-number_odd_or_even.html', n=n)
+    if n % 2 == 0:
+        state = 'even'
+    state = 'odd'
+    return render_template('6-number_odd_or_even.html', n=n, state=state)
 
 
 # Start the Flask application
