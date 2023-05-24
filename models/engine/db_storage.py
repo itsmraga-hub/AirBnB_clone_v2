@@ -20,6 +20,9 @@ class DBStorage:
     __engine = None
     __session = None
 
+    classes = {"Amenity": Amenity, "City": City,
+           "Place": Place, "Review": Review, "State": State, "User": User}
+
     def __init__(self):
         """DBStorage instantiation method"""
         user = getenv("HBNB_MYSQL_USER")
@@ -32,8 +35,8 @@ class DBStorage:
                                      user, passwd, host, db),
                                      pool_pre_ping=True)
 
-    def all(self, cls=None):
-        """Query on current db session all objects"""
+    """def all(self, cls=None):
+        "Query on current db session all objects"
         self.__session = sessionmaker(bind=self.__engine)()
         d = {}
         if cls and isinstance(cls, str):
@@ -50,6 +53,18 @@ class DBStorage:
                 k = "{}.{}".format(obj.__class__.__name__, obj.id)
                 d[k] = obj
         return d
+    """
+
+    def all(self, cls=None):
+        """query on the current database session"""
+        new_dict = {}
+        for clss in DBStorage.classes:
+            if cls is None or cls is DBStorage.classes[clss] or cls is clss:
+                objs = self.__session.query(DBStorage.classes[clss]).all()
+                for obj in objs:
+                    key = obj.__class__.__name__ + '.' + obj.id
+                    new_dict[key] = obj
+        return (new_dict)
 
     def save(self):
         """Commit all changes of the current database"""
@@ -68,5 +83,13 @@ class DBStorage:
     def reload(self):
         """Create tables in database and creates current database session"""
         Base.metadata.create_all(self.__engine)
-        session = sessionmaker(bind=self.__engine, expire_on_commit=False)
-        self.__session = scoped_session(session)()
+        session_f = sessionmaker(bind=self.__engine, expire_on_commit=False)
+        Session = scoped_session(session_f)
+        self.__session = Session()
+
+    def close(self):
+        """
+            Public method close that calls remove() method on the private
+            session
+        """
+        self.__session.close()
